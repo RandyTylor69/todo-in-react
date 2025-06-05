@@ -84,4 +84,5 @@ li > .right-group > button:hover{
 
 .cross-addon{
   text-decoration: line-through;
+  color: rgb(197, 197, 197);
 }

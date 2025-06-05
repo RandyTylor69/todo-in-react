@@ -22,11 +22,11 @@ function App() {
   // -------- TODO CONTAINERS -------------------------->>
 
   const displayTodos = todoItems.map((item, index) => (
-     !item.completed && 
-     <li key={index} id={index}>
+     <li key={index} id={index} className={item.completed? "cross-addon":""}>
       {item.content}
       <div className="right-group">
-        <button onClick={() => completeItem(index)}>✔</button>
+        <button onClick={() => completeItem(index)}
+          >✔</button>
         <button onClick={() => removeItem(index)}>🗑</button>
       </div>
     </li>
@@ -39,7 +39,7 @@ function App() {
   function completeItem(index){
     setTodoItems(prevArray => prevArray.map((item, i)=>{
       return (
-        i === index ? {...item, completed: true} : item
+        i === index ? {...item, completed: !item.completed} : item
       )
     }))
   }
