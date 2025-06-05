@@ -51,17 +51,23 @@ form > button:hover{
 
 
 li {
+  height: auto;
+  min-height: 1rem;
+  height: auto;
   display: flex;
   min-width: 20.5rem;
+  max-width: 20.5rem;
   justify-content: space-between;
   background-color: white;
   list-style: none;
   margin: 0.5rem;
   height: 1.5rem;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
-li > button{
-  background-color: rgb(125, 125, 125);
+li > .right-group> button{
+  background-color: rgb(158, 158, 158);
   border: none;
   color: rgb(255, 255, 255);
   width: 1.5rem;
@@ -70,7 +76,12 @@ li > button{
     transition: 0.3s
 }
 
-li > button:hover{
+
+li > .right-group > button:hover{
   background-color: rgb(39, 39, 39);
   color: white;
+}
+
+.cross-addon{
+  text-decoration: line-through;
 }

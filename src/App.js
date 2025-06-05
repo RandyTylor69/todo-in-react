@@ -1,47 +1,60 @@
 import "./App.css";
 import Header from "./components/Header";
 import Form from "./components/Form";
-import Todos from "./components/Todos"
-import React from "react"
+import Todos from "./components/Todos";
+import React from "react";
 
 function App() {
+  const [todoItems, setTodoItems] = React.useState([]);
+  const [completedItems, setCompletedItems] = React.useState([])
+  const [toggleComplete, setToggleComplete] = React.useState(false)
 
-  const [todoItems, setTodoItems] = React.useState([])
-  
   // -------- FORM MECHANICS -------------------------->>
 
   function handleSubmit(formData) {
-    const item = formData.get("todoItem")
-    setTodoItems(prevArray=>[...prevArray, item])
+    const item = formData.get("todoItem");
+    setTodoItems((prevArray) => [...prevArray, {
+      content: item,
+      completed: false
+    }]);
   }
 
   // -------- TODO CONTAINERS -------------------------->>
 
   const displayTodos = todoItems.map((item, index) => (
-    <li key={index} id={index}>
-      {item} 
-      <button
-        onClick={()=>removeItem(index)}
-      >x</button>
+     !item.completed && 
+     <li key={index} id={index}>
+      {item.content}
+      <div className="right-group">
+        <button onClick={() => completeItem(index)}>✔</button>
+        <button onClick={() => removeItem(index)}>🗑</button>
+      </div>
     </li>
-  ))
+  ));
 
-  function removeItem(index){
-    setTodoItems(prevArray=>
-      prevArray.filter((item, i)=>i!=index)
-    )
+  function removeItem(index) {
+    setTodoItems((prevArray) => prevArray.filter((item, i) => i != index));
   }
 
+  function completeItem(index){
+    setTodoItems(prevArray => prevArray.map((item, i)=>{
+      return (
+        i === index ? {...item, completed: true} : item
+      )
+    }))
+  }
 
+  console.log(todoItems)
 
   return (
     <main>
       <Header />
-      <Form handleSubmit = {handleSubmit}/>
-      <Todos 
-      todoItems = {todoItems} 
-      removeItem = {removeItem}
-      displayTodos = {displayTodos}/>
+      <Form 
+      handleSubmit={handleSubmit} 
+      />
+      <Todos
+        displayTodos={displayTodos}
+      />
     </main>
   );
 }
