@@ -1,9 +1,3 @@
-export default function Todos() {
-  return (
-    <ul>
-      <li>
-        Stuff <button>x</button>
-      </li>
-    </ul>
-  );
+export default function Todos(props) {
+  return <ul>{props.displayTodos}</ul>;
 }
