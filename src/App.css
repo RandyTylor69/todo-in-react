@@ -25,6 +25,8 @@ header {
 form {
   margin-top: 2rem;
   margin-bottom: 2rem;
+  display: flex;
+  height: 2rem;
 }
 
 form > input {
@@ -32,7 +34,6 @@ form > input {
   border: none;
   min-height: 2rem;
   width: 15rem;
-  margin-right: 1rem;
 }
 
 form>input::placeholder{
@@ -97,4 +98,22 @@ li > .right-group > button:hover{
 ul{
   flex:1;
   overflow-y: auto;
+}
+
+.select{
+  margin-left: 1rem;
+}
+
+.filter-todo{
+  height: 2rem;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-todo > option{
+  font-family: "Alata", sans-serif;
+  border: none;
+  border-radius: none;
+  background-color: white;
 }

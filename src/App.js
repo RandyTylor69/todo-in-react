@@ -6,62 +6,114 @@ import React from "react";
 
 function App() {
   const [todoItems, setTodoItems] = React.useState([]);
-  const [completedItems, setCompletedItems] = React.useState([])
-  const [toggleComplete, setToggleComplete] = React.useState(false)
+  const [dropdownOpen, setDropdownOpen] = React.useState(false); // if the dropdown menu is open
+  const [filter, setFilter] = React.useState("all");
 
   // -------- FORM MECHANICS -------------------------->>
 
   function handleSubmit(formData) {
     const item = formData.get("todoItem");
-    setTodoItems((prevArray) => [...prevArray, {
-      content: item,
-      completed: false
-    }]);
-  }
 
+    // add to all items
+    setTodoItems((prevArray) => [
+      ...prevArray,
+      {
+        content: item,
+        completed: false,
+      },
+    ]);
+  }
 
   // -------- TODO CONTAINERS -------------------------->>
 
+  // display all items
   const displayTodos = todoItems.map((item, index) => (
-     <li key={index} id={index} className={item.completed? "cross-addon":""}>
+    <li key={index} id={index} className={item.completed ? "cross-addon" : ""}>
       {item.content}
       <div className="right-group">
-        <button onClick={() => completeItem(index)}
-          >✔</button>
+        <button onClick={() => completeItem(index)}>✔</button>
         <button onClick={() => removeItem(index)}>🗑</button>
       </div>
     </li>
   ));
 
+  // display completed items
+  const displayCompleted = todoItems.map((item, index) => {
+    if (item.completed) {
+      return (
+        <li
+          key={index}
+          id={index}
+          className={item.completed ? "cross-addon" : ""}
+        >
+          {item.content}
+          <div className="right-group">
+            <button onClick={() => completeItem(index)}>✔</button>
+            <button onClick={() => removeItem(index)}>🗑</button>
+          </div>
+        </li>
+      );
+    }
+  });
+
+  // display uncompleted items
+  const displayUnCompleted = todoItems.map((item, index) => {
+    if (!item.completed) {
+      return (
+        <li
+          key={index}
+          id={index}
+          className={item.completed ? "cross-addon" : ""}
+        >
+          {item.content}
+          <div className="right-group">
+            <button onClick={() => completeItem(index)}>✔</button>
+            <button onClick={() => removeItem(index)}>🗑</button>
+          </div>
+        </li>
+      );
+    }
+  });
+
   function removeItem(index) {
+    // filter out items with a matching index, leaving the ones with diff index
     setTodoItems((prevArray) => prevArray.filter((item, i) => i != index));
   }
 
-  function completeItem(index){
-    // cross out item
-    setTodoItems(prevArray => prevArray.map((item, i)=>{
-      return (
-        i === index ? {...item, completed: !item.completed} : item
-      )
-    }))
+  function completeItem(index) {
+    setTodoItems((prevArray) =>
+      prevArray.map((item, i) => {
+        if (i === index) {
+          // cross out item
+          return { ...item, completed: !item.completed };
+        } else return item;
+      })
+    );
 
     // move item to the end
-    setTodoItems(prevArray => {
-      prevArray.push(prevArray.splice(index, 1)[0])
-      return(prevArray)
-    })
+    setTodoItems((prevArray) => {
+      prevArray.push(prevArray.splice(index, 1)[0]);
+      return prevArray;
+    });
   }
 
-  console.log(todoItems)
+  function filterTodo(e) {
+    setFilter(e.target.value);
+  }
 
   return (
     <main>
       <Header />
-      <Form 
-      handleSubmit={handleSubmit} 
+      <Form
+        handleSubmit={handleSubmit}
+        dropdownOpen={dropdownOpen}
+        filterTodo={filterTodo}
       />
       <Todos
         displayTodos={displayTodos}
+        filter={filter}
+        displayCompleted={displayCompleted}
+        displayUncompleted = {displayUnCompleted}
       />
     </main>
   );

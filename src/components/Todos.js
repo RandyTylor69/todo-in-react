@@ -1,3 +1,10 @@
 export default function Todos(props) {
-  return <ul>{props.displayTodos}</ul>;
+  return (
+    // return all
+    <ul>
+      {props.filter==="all" && props.displayTodos}
+      {props.filter==="completed" && props.displayCompleted}
+      {props.filter==="uncompleted" && props.displayUncompleted}
+    </ul>
+  );
 }
