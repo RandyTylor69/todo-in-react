@@ -9,6 +9,15 @@ function App() {
   const [dropdownOpen, setDropdownOpen] = React.useState(false); // if the dropdown menu is open
   const [filter, setFilter] = React.useState("all");
 
+    // run once at start
+  React.useEffect(()=>{
+    getLocalTodos()
+  }, [])
+    // keeps checking to save items into local storage
+  React.useEffect(()=>{
+    saveLocalTodos()
+  }, [todoItems,filter])
+
   // -------- FORM MECHANICS -------------------------->>
 
   function handleSubmit(formData) {
@@ -100,6 +109,24 @@ function App() {
   function filterTodo(e) {
     setFilter(e.target.value);
   }
+
+  // ----------------------------------------------//
+
+  function saveLocalTodos(){
+    // adding items to the local storage
+    localStorage.setItem('todoItems',JSON.stringify(todoItems))
+  }
+
+  function getLocalTodos(){
+    if (localStorage.getItem("todoItems")===null) {
+      localStorage.setItem("todoItems", JSON.stringify([]))
+    } else {
+      let todoLocal = JSON.parse(localStorage.getItem("todoItems"))
+      setTodoItems(todoLocal)
+    }
+  }
+
+  // ----------------------------------------------//
 
   return (
     <main>
