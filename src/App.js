@@ -19,6 +19,7 @@ function App() {
     }]);
   }
 
+
   // -------- TODO CONTAINERS -------------------------->>
 
   const displayTodos = todoItems.map((item, index) => (
@@ -37,11 +38,18 @@ function App() {
   }
 
   function completeItem(index){
+    // cross out item
     setTodoItems(prevArray => prevArray.map((item, i)=>{
       return (
         i === index ? {...item, completed: !item.completed} : item
       )
     }))
+
+    // move item to the end
+    setTodoItems(prevArray => {
+      prevArray.push(prevArray.splice(index, 1)[0])
+      return(prevArray)
+    })
   }
 
   console.log(todoItems)

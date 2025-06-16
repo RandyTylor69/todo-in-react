@@ -15,7 +15,7 @@ main{
   align-items: center;
   flex-direction: column;
   height: 30rem;
-  margin-top: 5rem;
+  margin-top: 15rem;
 }
 
 header {
@@ -33,6 +33,11 @@ form > input {
   min-height: 2rem;
   width: 15rem;
   margin-right: 1rem;
+}
+
+form>input::placeholder{
+  color: #acacac;
+  font-style: italic;
 }
 
 form > button {
@@ -64,10 +69,11 @@ li {
   height: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: anywhere;
+  transition:0.3s;
 }
 
 li > .right-group> button{
-  background-color: rgb(158, 158, 158);
+  background-color: rgb(189, 189, 189);
   border: none;
   color: rgb(255, 255, 255);
   width: 1.5rem;
@@ -85,4 +91,10 @@ li > .right-group > button:hover{
 .cross-addon{
   text-decoration: line-through;
   color: rgb(197, 197, 197);
+  opacity: 0.3;
+}
+
+ul{
+  flex:1;
+  overflow-y: auto;
 }
